@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="hi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <title>Karan Kumar Cyber Cafe</title>
 
     <style>
+
         * {
             margin: 0;
             padding: 0;
@@ -18,6 +20,8 @@
             background-color: #f4f7fb;
             color: #222;
         }
+
+        /* HEADER */
 
         header {
             background-color: #083b66;
@@ -35,6 +39,9 @@
             font-size: 18px;
         }
 
+
+        /* HERO SECTION */
+
         .hero {
             text-align: center;
             padding: 60px 20px;
@@ -51,6 +58,9 @@
             font-size: 18px;
         }
 
+
+        /* BUTTON */
+
         .btn {
             display: inline-block;
             margin: 10px;
@@ -58,8 +68,18 @@
             background-color: #083b66;
             color: white;
             text-decoration: none;
+            border: none;
             border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
         }
+
+        .btn:hover {
+            background-color: #052b4a;
+        }
+
+
+        /* SERVICES */
 
         .services {
             padding: 40px 20px;
@@ -90,6 +110,50 @@
             margin-bottom: 10px;
         }
 
+
+        /* PRINT REQUEST FORM */
+
+        .print-request {
+            background-color: white;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px #ccc;
+        }
+
+        .print-request h2 {
+            color: #083b66;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .print-request > p {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .print-request label {
+            font-weight: bold;
+        }
+
+        .print-request input,
+        .print-request select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .print-request input[type="file"] {
+            padding: 10px;
+        }
+
+
+        /* FOOTER */
+
         footer {
             background-color: #083b66;
             color: white;
@@ -97,67 +161,278 @@
             padding: 20px;
             margin-top: 30px;
         }
+
+
+        /* MOBILE FRIENDLY */
+
+        @media (max-width: 600px) {
+
+            header h1 {
+                font-size: 24px;
+            }
+
+            .hero h2 {
+                font-size: 25px;
+            }
+
+            .card {
+                width: 100%;
+            }
+
+            .print-request {
+                margin: 20px 15px;
+            }
+
+        }
+
     </style>
+
 </head>
+
 
 <body>
 
+
+<!-- HEADER -->
+
 <header>
+
     <h1>🖥️ KARAN KUMAR CYBER CAFE</h1>
-    <p>Your Digital Service Partner | आपकी डिजिटल सेवा का साथी</p>
+
+    <p>
+        Your Digital Service Partner |
+        आपकी डिजिटल सेवा का साथी
+    </p>
+
 </header>
 
+
+
+<!-- HERO SECTION -->
+
 <section class="hero">
+
     <h2>Welcome to Karan Kumar Cyber Cafe</h2>
+
     <p>करन कुमार साइबर कैफे में आपका स्वागत है</p>
 
-    <a href="#services" class="btn">Our Services | हमारी सेवाएँ</a>
-<button class="btn" onclick="window.print()">🖨️ Print This Page | यह पेज प्रिंट करें</button>
+    <a href="#services" class="btn">
+        Our Services | हमारी सेवाएँ
+    </a>
+
+    <button class="btn" onclick="window.print()">
+        🖨️ Print This Page | यह पेज प्रिंट करें
+    </button>
+
+</section>
+
+
+
+<!-- SERVICES -->
 
 <section class="services" id="services">
 
     <h2>हमारी सेवाएँ | Our Services</h2>
 
+
     <div class="cards">
 
+
         <div class="card">
+
             <h3>🖨️ Printout</h3>
-            <p>Printout और Photocopy Services</p>
+
+            <p>
+                Printout और Photocopy Services
+            </p>
+
         </div>
 
+
+
         <div class="card">
+
             <h3>📄 Online Form</h3>
-            <p>Online Form Apply Services</p>
+
+            <p>
+                Online Form Apply Services
+            </p>
+
         </div>
 
+
+
         <div class="card">
+
             <h3>📷 Photo & Scan</h3>
-            <p>Photo और Document Scanning</p>
+
+            <p>
+                Photo और Document Scanning
+            </p>
+
         </div>
 
+
+
         <div class="card">
+
             <h3>🎫 Ticket Booking</h3>
-            <p>Online Ticket Booking Services</p>
+
+            <p>
+                Online Ticket Booking Services
+            </p>
+
         </div>
 
+
+
         <div class="card">
+
             <h3>💻 Online Services</h3>
-            <p>All प्रकार की Digital Services</p>
+
+            <p>
+                All प्रकार की Digital Services
+            </p>
+
         </div>
 
+
+
         <div class="card">
+
             <h3>📑 Document Services</h3>
-            <p>Documents और अन्य सेवाएँ</p>
+
+            <p>
+                Documents और अन्य सेवाएँ
+            </p>
+
         </div>
+
 
     </div>
 
 </section>
 
+
+
+<!-- ONLINE PRINT REQUEST -->
+
+<section class="print-request">
+
+    <h2>🖨️ Online Print Request</h2>
+
+    <p>
+        ऑनलाइन प्रिंट के लिए अपना Document भेजें
+    </p>
+
+
+    <form>
+
+
+        <label>
+            Your Name | आपका नाम
+        </label>
+
+        <input
+            type="text"
+            placeholder="अपना नाम लिखें"
+            required
+        >
+
+
+        <br><br>
+
+
+        <label>
+            Mobile Number | मोबाइल नंबर
+        </label>
+
+        <input
+            type="tel"
+            placeholder="अपना मोबाइल नंबर"
+            required
+        >
+
+
+        <br><br>
+
+
+        <label>
+            Select Document | Document चुनें
+        </label>
+
+        <input
+            type="file"
+            accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+        >
+
+
+        <br><br>
+
+
+        <label>
+            Print Type | प्रिंट का प्रकार
+        </label>
+
+
+        <select>
+
+            <option>
+                Black & White | ब्लैक एंड व्हाइट
+            </option>
+
+            <option>
+                Color | कलर
+            </option>
+
+        </select>
+
+
+        <br><br>
+
+
+        <label>
+            Number of Copies | कितनी कॉपी
+        </label>
+
+
+        <input
+            type="number"
+            min="1"
+            value="1"
+        >
+
+
+        <br><br>
+
+
+        <button
+            type="submit"
+            class="btn"
+        >
+
+            🖨️ Send Print Request
+
+        </button>
+
+
+    </form>
+
+</section>
+
+
+
+<!-- FOOTER -->
+
 <footer>
+
     <h3>KARAN KUMAR CYBER CAFE</h3>
+
     <p>© 2026 All Rights Reserved</p>
+
 </footer>
 
+
 </body>
+
 </html>
