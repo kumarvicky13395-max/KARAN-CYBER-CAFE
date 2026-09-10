@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Karan Kumar Cyber Cafe</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background-color: #083b66;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        header h1 {
+            font-size: 32px;
+        }
+
+        header p {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: white;
+        }
+
+        .hero h2 {
+            font-size: 32px;
+            color: #083b66;
+        }
+
+        .hero p {
+            margin: 15px;
+            font-size: 18px;
+        }
+
+        .btn {
+            display: inline-block;
+            margin: 10px;
+            padding: 12px 25px;
+            background-color: #083b66;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .services {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .services h2 {
+            margin-bottom: 30px;
+            color: #083b66;
+        }
+
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: white;
+            width: 250px;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px #ccc;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background-color: #083b66;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        /* Document Crop & Print Tool */
+        .document-tool {
+            max-width: 1000px;
+            margin: 20px auto 40px;
+            padding: 25px 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #ccc;
+        }
+
+        .document-tool h2 {
+            color: #083b66;
+            margin-bottom: 8px;
+        }
+
+        .document-tool .note {
+            color: #555;
+            margin-bottom: 18px;
+            line-height: 1.5;
+        }
+
+        .tool-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin: 12px 0;
+        }
+
+        .tool-row label {
+            font-weight: bold;
+        }
+
+        .tool-select, .tool-number {
+            padding: 10px;
+            border: 1px solid #bbb;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        .upload-label {
+            display: inline-block;
+            padding: 12px 20px;
+            background: #083b66;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        #documentInput {
+            display: none;
+        }
+
+        .crop-area {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .crop-container {
+            max-height: 520px;
+            overflow: hidden;
+            background: #f1f1f1;
+            border-radius: 8px;
+        }
+
+        .crop-container img {
+            display: block;
+            max-width: 100%;
+        }
+
+        .tool-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .tool-btn {
+            border: none;
+            padding: 11px 17px;
+            border-radius: 6px;
+            cursor: pointer;
+            background: #083b66;
+            color: white;
+            font-size: 15px;
+        }
+
+        .tool-btn.secondary {
+            background: #555;
+        }
+
+        .tool-btn.success {
+            background: #176b3a;
+        }
+
+        .tool-btn:disabled {
+            opacity: .45;
+            cursor: not-allowed;
+        }
+
+
+        .size-info {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f2f7fb;
+            border-radius: 6px;
+            color: #333;
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        .preview-box {
+            display: none;
+            margin-top: 22px;
+            padding: 15px;
+            background: #f7f7f7;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        #resultCanvas {
+            max-width: 100%;
+            border: 1px solid #bbb;
+            background: white;
+        }
+
+
+        #sheetCanvas {
+            width: 100%;
+            max-height: 650px;
+            object-fit: contain;
+        }
+
+        .privacy-note {
+            margin-top: 15px;
+            padding: 12px;
+            background: #eef6ff;
+            border-left: 4px solid #083b66;
+            text-align: left;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 600px) {
+            .document-tool {
+                margin: 10px;
+                padding: 18px 12px;
+            }
+        }
+
+    </style>
+
+    <!-- Document Crop & Print tools -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+</head>
+
+<body>
+
+<header>
+    <h1>🖥️ KARAN KUMAR CYBER CAFE</h1>
+    <p>Your Digital Service Partner | आपकी डिजिटल सेवा का साथी</p>
+</header>
+
+<section class="hero">
+    <h2>Welcome to Karan Kumar Cyber Cafe</h2>
+    <p>करन कुमार साइबर कैफे में आपका स्वागत है</p>
+
+    <a href="#services" class="btn">Our Services | हमारी सेवाएँ</a>
+</section>
+
+<section class="services" id="services">
+
+    <h2>हमारी सेवाएँ | Our Services</h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>🖨️ Printout</h3>
+            <p>Printout और Photocopy Services</p>
+        </div>
+
+        <div class="card">
+            <h3>📄 Online Form</h3>
+            <p>Online Form Apply Services</p>
+        </div>
+
+        <div class="card">
+            <h3>📷 Photo & Scan</h3>
+            <p>Photo और Document Scanning</p>
+        </div>
+
+        <div class="card">
+            <h3>🎫 Ticket Booking</h3>
+            <p>Online Ticket Booking Services</p>
+        </div>
+
+        <div class="card">
+            <h3>💻 Online Services</h3>
+            <p>All प्रकार की Digital Services</p>
+        </div>
+
+        <div class="card">
+            <h3>📑 Document Services</h3>
+            <p>Documents और अन्य सेवाएँ</p>
+            <a href="#document-tool" class="btn">Crop & Print</a>
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="document-tool" id="document-tool">
+    <h2>✂️ Document / Card Crop & Print</h2>
+    <p class="note">
+        Aadhaar, PAN, Ayushman, Voter ID, Driving Licence या किसी भी document की image
+        upload करके उसे crop करें, preview देखें, image/PDF में download करें और print करें।
+    </p>
+
+    <div class="tool-row">
+        <label class="upload-label" for="documentInput">📤 Document Upload करें</label>
+        <input id="documentInput" type="file" accept="image/*">
+    </div>
+
+    <div class="tool-row">
+        <label for="paperSize">Print Size:</label>
+        <select id="paperSize" class="tool-select">
+            <option value="A4">A4</option>
+            <option value="A5">A5</option>
+            <option value="original">Original / Image Size</option>
+        </select>
+
+        <label for="cardPreset">Card Type:</label>
+        <select id="cardPreset" class="tool-select">
+            <option value="custom">Custom Document</option>
+            <option value="aadhar">Aadhaar Card</option>
+            <option value="pan">PAN Card</option>
+            <option value="ayushman">Ayushman Card</option>
+            <option value="voter">Voter ID</option>
+            <option value="dl">Driving Licence</option>
+        </select>
+
+        <label for="layout">A4 Layout:</label>
+        <select id="layout" class="tool-select">
+            <option value="single">1 Card / Page</option>
+            <option value="two">2 Cards / Page</option>
+            <option value="four">4 Cards / Page</option>
+            <option value="eight">8 Cards / Page</option>
+        </select>
+
+        <label for="sizeMode">Card Size:</label>
+        <select id="sizeMode" class="tool-select">
+            <option value="auto">Auto / Fit</option>
+            <option value="standard">Standard Card</option>
+            <option value="custom">Custom</option>
+        </select>
+
+        <label for="customW">W(mm):</label>
+        <input id="customW" class="tool-number" type="number" min="20" max="200" step="0.1" value="85">
+
+        <label for="customH">H(mm):</label>
+        <input id="customH" class="tool-number" type="number" min="20" max="200" step="0.1" value="54">
+
+        <label for="copies">Copies:</label>
+        <input id="copies" class="tool-number" type="number" min="1" max="20" value="1">
+
+        <label for="orientation">Page:</label>
+        <select id="orientation" class="tool-select">
+            <option value="auto">Auto</option>
+            <option value="portrait">Portrait</option>
+            <option value="landscape">Landscape</option>
+        </select>
+
+        <label for="margin">Margin(mm):</label>
+        <input id="margin" class="tool-number" type="number" min="0" max="25" step="1" value="8">
+    </div>
+
+    <div class="size-info" id="sizeInfo">
+        💡 <b>Tip:</b> Standard Card mode सामान्य bank/ID-card जैसे 85.6 × 53.98 mm size के लिए है।
+        जरूरत के अनुसार Crop box को manually adjust कर सकते हैं।
+    </div>
+
+    <div class="crop-area" id="cropArea">
+        <h3>Document का चारों तरफ से सही हिस्सा चुनें</h3>
+        <p style="margin:8px 0 12px;color:#555;">
+            Crop box को खींचकर document के चारों किनारों पर सेट करें।
+        </p>
+
+        <div class="crop-container">
+            <img id="cropImage" alt="Uploaded document">
+        </div>
+
+        <div class="tool-buttons">
+            <button class="tool-btn secondary" id="rotateLeft" type="button">↶ Rotate</button>
+            <button class="tool-btn secondary" id="rotateRight" type="button">↷ Rotate</button>
+            <button class="tool-btn secondary" id="resetCrop" type="button">Reset</button>
+            <button class="tool-btn success" id="cropButton" type="button">✂️ Crop तैयार करें</button>
+        </div>
+    </div>
+
+    <div class="preview-box" id="previewBox">
+        <h3>Preview</h3>
+        <p style="margin:8px 0 12px;color:#555;">नीचे तैयार document है।</p>
+        <canvas id="resultCanvas"></canvas>
+
+        <h3 style="margin-top:20px;">A4 Print Sheet Preview</h3>
+        <canvas id="sheetCanvas" style="max-width:100%;border:1px solid #bbb;background:white;margin-top:10px;"></canvas>
+
+        <div class="tool-buttons">
+            <button class="tool-btn secondary" id="makeSheet" type="button">📐 A4 Sheet बनाएं</button>
+            <button class="tool-btn" id="downloadImage" type="button">🖼️ Download Image</button>
+            <button class="tool-btn" id="downloadPdf" type="button">📄 Download PDF</button>
+            <button class="tool-btn success" id="printDocument" type="button">🖨️ Print</button>
+        </div>
+
+        <div class="privacy-note">
+            🔒 <b>Privacy:</b> यह tool document को browser में ही process करता है।
+            कोई document आपकी website पर save नहीं किया जाता। Page बंद/refresh करने पर
+            temporary document data हट जाएगा।
+        </div>
+    </div>
+</section>
+
+<footer>
+    <h3>KARAN KUMAR CYBER CAFE</h3>
+    <p>© 2026 All Rights Reserved</p>
+</footer>
+
+
+<script>
+(function () {
+    const input = document.getElementById("documentInput");
+    const cropArea = document.getElementById("cropArea");
+    const cropImage = document.getElementById("cropImage");
+    const cropButton = document.getElementById("cropButton");
+    const previewBox = document.getElementById("previewBox");
+    const canvas = document.getElementById("resultCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let cropper = null;
+    let currentObjectUrl = null;
+
+    input.addEventListener("change", function () {
+        const file = this.files[0];
+        if (!file) return;
+
+        if (!file.type.startsWith("image/")) {
+            alert("कृपया JPG, PNG या कोई image file चुनें।");
+            return;
+        }
+
+        if (currentObjectUrl) URL.revokeObjectURL(currentObjectUrl);
+        currentObjectUrl = URL.createObjectURL(file);
+
+        cropImage.src = currentObjectUrl;
+        cropArea.style.display = "block";
+        previewBox.style.display = "none";
+
+        cropImage.onload = function () {
+            if (cropper) cropper.destroy();
+
+            cropper = new Cropper(cropImage, {
+                viewMode: 1,
+                dragMode: "crop",
+                autoCropArea: 0.90,
+                responsive: true,
+                background: false,
+                movable: true,
+                zoomable: true,
+                rotatable: true,
+                scalable: false
+            });
+        };
+    });
+
+    document.getElementById("rotateLeft").addEventListener("click", function () {
+        if (cropper) cropper.rotate(-90);
+    });
+
+    document.getElementById("rotateRight").addEventListener("click", function () {
+        if (cropper) cropper.rotate(90);
+    });
+
+    document.getElementById("resetCrop").addEventListener("click", function () {
+        if (cropper) cropper.reset();
+    });
+
+    cropButton.addEventListener("click", function () {
+        if (!cropper) {
+            alert("पहले document upload करें।");
+            return;
+        }
+
+        const cropped = cropper.getCroppedCanvas({
+            imageSmoothingEnabled: true,
+            imageSmoothingQuality: "high",
+            maxWidth: 3000,
+            maxHeight: 3000
+        });
+
+        if (!cropped) {
+            alert("Crop नहीं हो पाया।");
+            return;
+        }
+
+        canvas.width = cropped.width;
+        canvas.height = cropped.height;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(cropped, 0, 0);
+
+        previewBox.style.display = "block";
+        buildSheetCanvas();
+        previewBox.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    function getFilename(extension) {
+        const date = new Date().toISOString().slice(0, 10);
+        return "Karan-Kumar-Cyber-Cafe-Document-" + date + "." + extension;
+    }
+
+    const cardPreset = document.getElementById("cardPreset");
+    const sizeInfo = document.getElementById("sizeInfo");
+
+    const presetNames = {
+        custom: "Custom Document",
+        aadhar: "Aadhaar Card",
+        pan: "PAN Card",
+        ayushman: "Ayushman Card",
+        voter: "Voter ID",
+        dl: "Driving Licence"
+    };
+
+    cardPreset.addEventListener("change", function () {
+        const name = presetNames[this.value] || "Custom Document";
+        sizeInfo.innerHTML =
+            "💡 <b>" + name + ":</b> Crop box को document के चारों किनारों पर सही तरह से रखें। " +
+            "यह preset print layout को आसान बनाता है; official card dimensions अलग हो सकते हैं, इसलिए final print से पहले preview जरूर देखें।";
+    });
+
+    document.getElementById("downloadImage").addEventListener("click", function () {
+        if (!canvas.width) {
+            alert("पहले document crop करें।");
+            return;
+        }
+
+        canvas.toBlob(function (blob) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = getFilename("png");
+            a.click();
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+        }, "image/png");
+    });
+
+
+    function getPageSettings() {
+        const paper = document.getElementById("paperSize").value;
+        const orientation = document.getElementById("orientation").value;
+        const margin = Math.max(0, Number(document.getElementById("margin").value) || 8);
+
+        let pageW = 210, pageH = 297;
+        if (paper === "A5") { pageW = 148; pageH = 210; }
+
+        let orient = orientation;
+        if (orient === "auto") orient = canvas.width > canvas.height ? "landscape" : "portrait";
+        if (orient === "landscape") [pageW, pageH] = [pageH, pageW];
+
+        return { paper, pageW, pageH, margin, orient };
+    }
+
+    function getCardSize() {
+        const mode = document.getElementById("sizeMode").value;
+        const imgRatio = canvas.width / canvas.height;
+
+        if (mode === "standard") {
+            // ISO/credit-card-like standard: 85.60 x 53.98 mm.
+            return { w: 85.6, h: 53.98 };
+        }
+
+        if (mode === "custom") {
+            let w = Math.max(20, Number(document.getElementById("customW").value) || 85);
+            let h = Math.max(20, Number(document.getElementById("customH").value) || 54);
+            return { w, h };
+        }
+
+        // Auto-fit to the available slot while preserving the document ratio.
+        return { w: 85.6, h: 53.98, ratio: imgRatio };
+    }
+
+    function getGrid() {
+        const layout = document.getElementById("layout").value;
+        if (layout === "two") return { cols: 1, rows: 2 };
+        if (layout === "four") return { cols: 2, rows: 2 };
+        if (layout === "eight") return { cols: 2, rows: 4 };
+        return { cols: 1, rows: 1 };
+    }
+
+    function buildSheetCanvas() {
+        if (!canvas.width) {
+            alert("पहले document crop करें।");
+            return null;
+        }
+
+        const { pageW, pageH, margin } = getPageSettings();
+        const { cols, rows } = getGrid();
+
+        // 3.7795 px per mm gives a practical high-resolution browser preview.
+        const scale = 3.7795;
+        const sheet = document.getElementById("sheetCanvas");
+        sheet.width = Math.round(pageW * scale);
+        sheet.height = Math.round(pageH * scale);
+
+        const sctx = sheet.getContext("2d");
+        sctx.fillStyle = "#ffffff";
+        sctx.fillRect(0, 0, sheet.width, sheet.height);
+        sctx.strokeStyle = "#dddddd";
+        sctx.lineWidth = 1;
+
+        const gap = 5;
+        const usableW = pageW - margin * 2;
+        const usableH = pageH - margin * 2;
+        const slotW = (usableW - gap * (cols - 1)) / cols;
+        const slotH = (usableH - gap * (rows - 1)) / rows;
+
+        const imgRatio = canvas.width / canvas.height;
+        const mode = document.getElementById("sizeMode").value;
+        const customW = Number(document.getElementById("customW").value) || 85;
+        const customH = Number(document.getElementById("customH").value) || 54;
+
+        for (let r = 0; r < rows; r++) {
+            for (let c = 0; c < cols; c++) {
+                let targetW = slotW;
+                let targetH = slotH;
+
+                if (mode === "standard") {
+                    targetW = 85.6;
+                    targetH = 53.98;
+                } else if (mode === "custom") {
+                    targetW = customW;
+                    targetH = customH;
+                } else {
+                    // Fit image into slot preserving its real ratio.
+                    targetW = slotW;
+                    targetH = targetW / imgRatio;
+                    if (targetH > slotH) {
+                        targetH = slotH;
+                        targetW = targetH * imgRatio;
+                    }
+                }
+
+                if (targetW > slotW || targetH > slotH) {
+                    const ratio = Math.min(slotW / targetW, slotH / targetH);
+                    targetW *= ratio;
+                    targetH *= ratio;
+                }
+
+                const x = margin + c * (slotW + gap) + (slotW - targetW) / 2;
+                const y = margin + r * (slotH + gap) + (slotH - targetH) / 2;
+
+                sctx.strokeStyle = "#bbbbbb";
+                sctx.strokeRect(x * scale, y * scale, targetW * scale, targetH * scale);
+
+                sctx.drawImage(
+                    canvas,
+                    x * scale, y * scale,
+                    targetW * scale, targetH * scale
+                );
+            }
+        }
+
+        return sheet;
+    }
+
+    document.getElementById("makeSheet").addEventListener("click", function () {
+        buildSheetCanvas();
+        document.getElementById("sheetCanvas").scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+
+    document.getElementById("downloadPdf").addEventListener("click", function () {
+        if (!canvas.width) {
+            alert("पहले document crop करें।");
+            return;
+        }
+
+        const { jsPDF } = window.jspdf;
+        const settings = getPageSettings();
+        const sheet = buildSheetCanvas();
+
+        const pdf = new jsPDF({
+            orientation: settings.orient,
+            unit: "mm",
+            format: settings.paper === "A5" ? "a5" : "a4"
+        });
+
+        pdf.addImage(
+            sheet.toDataURL("image/jpeg", 0.95),
+            "JPEG",
+            0,
+            0,
+            settings.pageW,
+            settings.pageH
+        );
+
+        pdf.save(getFilename("pdf"));
+    });
+
+    document.getElementById("printDocument").addEventListener("click", function () {
+        if (!canvas.width) {
+            alert("पहले document crop करें।");
+            return;
+        }
+
+        const copies = Math.max(1, Math.min(20, Number(document.getElementById("copies").value) || 1));
+        const settings = getPageSettings();
+
+        // Build one finished page, then repeat it for requested copies.
+        const sheet = buildSheetCanvas();
+        const imageData = sheet.toDataURL("image/png");
+        const printWindow = window.open("", "_blank");
+
+        if (!printWindow) {
+            alert("Print window blocked है। Browser में pop-up allow करें।");
+            return;
+        }
+
+        let pages = "";
+        for (let i = 0; i < copies; i++) {
+            pages += `<div class="print-page"><img src="${imageData}"></div>`;
+        }
+
+        printWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Karan Kumar Cyber Cafe - Print</title>
+                <style>
+                    @page {
+                        size: ${settings.paper === "A5" ? "A5" : "A4"} ${settings.orient};
+                        margin: 0;
+                    }
+                    html, body { margin:0; padding:0; }
+                    .print-page {
+                        width: ${settings.pageW}mm;
+                        height: ${settings.pageH}mm;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        page-break-after:always;
+                    }
+                    .print-page:last-child { page-break-after:auto; }
+                    .print-page img {
+                        width:100%;
+                        height:100%;
+                        object-fit:contain;
+                    }
+                </style>
+            </head>
+            <body>${pages}</body>
+            </html>
+        `);
+
+        printWindow.document.close();
+        printWindow.focus();
+
+        setTimeout(function () {
+            printWindow.print();
+        }, 600);
+    });
+
+})();
+</script>
+
+</body>
+</html>
